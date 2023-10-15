@@ -1,0 +1,19 @@
+{
+  "name": "evershop.com",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "setup": "evershop install",
+    "build": "evershop build",
+    "start": "evershop start",
+    "dev:evershop": "evershop dev --debug",
+    "dev": "docker run --rm --publish 127.0.0.1:8823:3000 --interactive --tty --volume ./:/opt/evershop --workdir /opt/evershop --name evershop_dev --network evershop_dev node npm run dev:evershop",
+    "dev:prod": "docker build -t evershop.com:dev .; docker run --rm --publish 127.0.0.1:8823:3000 --volume ./media:/opt/evershop/media --volume ./config:/opt/evershop/config --name evershop_dev --network evershop_dev --detach evershop.com:dev",
+    "dev:db": "docker run --rm --user 823:823 --detach --hostname evershop_postgres --env POSTGRES_HOST_AUTH_METHOD=trust --network evershop_dev --name evershop_postgres_dev --volume ./dev/postgres:/var/lib/postgresql/data postgres"
+  },
+  "dependencies": {
+    "@evershop/evershop": "^1.0.0-rc.7",
+    "@evershop/google_login": "^1.0.0",
+    "@evershop/sendgrid": "^1.0.0"
+  }
+}
